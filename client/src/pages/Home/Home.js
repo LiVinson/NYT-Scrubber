@@ -11,7 +11,8 @@ class Home extends Component {
     state = {
         topic: "",
         startYear: 2018,
-        endYear: 2018
+        endYear: 2018,
+        results = []
     };
 
     //When the component moutns (in this case when the page is loaded), will make a call to NYT API using methods in utils> API to get starter articles
@@ -29,7 +30,7 @@ class Home extends Component {
         })
 
 
-    }
+    };
 
 
     //Called when user clicks submit
