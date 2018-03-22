@@ -4,11 +4,11 @@ import Home from "./pages/Home";
 
 
 const App = () => (
-  <Router>
+
 
 <Home />
 
-  </Router>
+
 );
 
 export default App;

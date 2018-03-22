@@ -5,6 +5,7 @@ import Panel from "../../components/Panel";
 import SearchForm from "../../components/SearchForm";
 import List from "../../components/List";
 import ListItem from "../../components/ListItem";
+import ListDiv from "../../components/ListDiv";
 import Button from "../../components/Button";
 
 import API from "../../utils/API";
@@ -19,7 +20,8 @@ class Home extends Component {
         endYear: 2018,
         results: [],
         error: "",
-        lastSaved: ""
+        lastSaved: "",
+        savedArticles: []
     };
 
     //When the component moutns (in this case when the page is loaded), will make a call to NYT API using methods in utils> API to get starter articles
@@ -35,8 +37,6 @@ class Home extends Component {
         this.setState({
             [name]: value
         })
-
-
     };
 
 
@@ -50,18 +50,22 @@ class Home extends Component {
                 throw new Error(res.data.message);
             };
             console.log(res.data.response.docs);
+            //Only saves results that are articles (discarding multimedia)
+            
             this.setState({ results: res.data.response.docs, error: "" });
-
         }).catch(err => this.setState({ error: err.message }))
     };
 
     handleArticleSave = event => {
         event.preventDefault();
-        // API.saveArticle(this.state.lastSaved).then(res => {
+        // console.log(event.target.id);
+        const clickedArticle = this.state.results.filter(element => element.id = event.target.id)[0];
+        // console.log(clickedArticle.headline);
 
-        // })
-
-
+        // this.setState({ lastSaved: clickedArticle})
+        API.saveArticle(clickedArticle).then(res => {
+            console.log("Home response:", res)
+        })
     };
 
     render() {
@@ -84,17 +88,15 @@ class Home extends Component {
                             <List>
                                 {this.state.results.map(result => (
                                     <ListItem key={result._id}>
-                                        {result.web_url}
-                                        <Button id={result._id} onClick={this.handleArticleSave}>
-                                        Save Article
-                                    </ Button>
+                                        <ListDiv headline ={result.headline.main} byline={result.byline.original} pub_date = {result.pub_date} snippet = {result.snippet} url = {result.web_url} />
+                                       
+                                        <Button id={result._id} handleArticleSave={this.handleArticleSave}>
+                                            Save Article
+                                        </ Button>
                                     </ListItem>
-
                             ))}
-
-
                             </List>
-                        ) : (<h2> Search for an Article Above and View Resulst Here</h2>)
+                        ) : (<h2> Search for an Article Above and View Results Here</h2>)
                         }
 
 
