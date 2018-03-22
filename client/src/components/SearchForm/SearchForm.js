@@ -1,7 +1,8 @@
 import React from "react";
 import "./SearchForm.css";
 
-const SearchForm = props => (
+const SearchForm = props => {
+ return (
   <form className="search">
     <div className="form-group">
       <label>Topic</label>
@@ -39,6 +40,7 @@ const SearchForm = props => (
 
 
   </form>
-);
+)
+};
 
 export default SearchForm;
