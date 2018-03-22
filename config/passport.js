@@ -1,7 +1,7 @@
-module.exports = (passport,User) =>{
+// module.exports = (passport,User) =>{
 
-    passport.use(User.createStrategy());
+//     passport.use(User.createStrategy());
 
-    passport.serializeUser(User.serializeUser());
-    passport.deserializeUser(User.deserializeUser());
-};
+//     passport.serializeUser(User.serializeUser());
+//     passport.deserializeUser(User.deserializeUser());
+// };

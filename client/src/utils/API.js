@@ -1,16 +1,21 @@
 import axios from "axios";
 
 export default {
-    getArticles: (props) => {
-        const { topic, startYear, endYear } = props;
+    getArticles: (data) => {
+        const { topic, startYear, endYear } = data;
         console.log(topic, startYear, endYear);
-        return (axios.get("https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=b9f91d369ff59547cd47b931d8cbc56b:0:74623931&q=" + [topic] + "&begin_date=" + [startYear] + "0101" + "&end_date=" + [endYear] + "0101")
-        )
+        return (axios.get("https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=b9f91d369ff59547cd47b931d8cbc56b:0:74623931&q=" + [topic] + "&begin_date=" + [startYear] + "0101" + "&end_date=" + [endYear] + "0101" + "&fq=document_type:(article)"));
     },
 
-    saveArticles: (props) => {
-        const btnId = props.id;
-console.log("btnId");
+    saveArticle: (articleData) => {
+        // console.log("title inside API Save Article", article.headline);
+        // console.log("btnId");
+
+
+        console.log("Inside saveArticle function");
+        return (axios.post("/api/article", articleData));
+        //Add functionality - post request using axios to the routes, routes to controller file. Create a new instance of Article schema, save to mongo DB, return the saved object, pass back in a promise in Home, update state (last Saved),
+        //Update panel 3 to do a get request for articles saved in the db and display
 
     }
 }
