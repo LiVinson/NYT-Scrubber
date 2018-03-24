@@ -21,11 +21,25 @@ export default {
             snippet: data.snippet,
             url: data.web_url
         }
-console.log("publishing date:", articleData.pub_date);
-console.log(typeof articleData.pub_date);
+        // console.log(articleData.snippet);
+// console.log("publishing date:", articleData.pub_date);
+// console.log(typeof articleData.pub_date);
         return (axios.post("/api/article", articleData));
         //Add functionality - post request using axios to the routes, routes to controller file. Create a new instance of Article schema, save to mongo DB, return the saved object, pass back in a promise in Home, update state (last Saved),
         //Update panel 3 to do a get request for articles saved in the db and display
 
-    }
+    },
+
+    getSavedArticles: () => {
+        console.log("Inside API.getSavedArticles");
+        return (axios.get("/api/articles"));
+
+    },
+    
+    deleteArticle: (data) => {
+        console.log(data);
+        return (axios.delete(`api/article/${data._id}`));
+    },
+
+
 }

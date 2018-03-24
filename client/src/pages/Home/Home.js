@@ -7,7 +7,6 @@ import List from "../../components/List";
 import ListItem from "../../components/ListItem";
 import ListDiv from "../../components/ListDiv";
 import Button from "../../components/Button";
-
 import API from "../../utils/API";
 // import Footer from "../../components/Footer";
 
@@ -25,10 +24,20 @@ class Home extends Component {
     };
 
     //When the component moutns (in this case when the page is loaded), will make a call to NYT API using methods in utils> API to get starter articles
-    // componentDidMount() {
+    componentDidMount() {
+        this.getSaved();
 
+    };
 
-    // }
+    getSaved = () => {
+        console.log("getSaved method")
+        API.getSavedArticles().then(response => {
+            console.log("response to getSavedArticles: ", response.data);
+            this.setState({
+                savedArticles: response.data
+            });
+        })
+    };
 
     //Called when user updates any of 3 form inputs
     handleInputChange = event => {
@@ -40,18 +49,17 @@ class Home extends Component {
     };
 
 
-    //Called when user clicks submit
+    //Called when user clicks submit button in form
     handleFormSubmit = event => {
         event.preventDefault();
-        //Call method on API that will pass in the parameters from state and be used to interact with API
+        //Call method on API that will pass in state as parameter to be used to interact with API
 
         API.getArticles(this.state).then(res => {
             if (res.data.status === "error") {
                 throw new Error(res.data.message);
             };
-            console.log(res.data.response.docs);
-            //Only saves results that are articles (discarding multimedia)
-            
+            // console.log(res.data.response.docs);
+
             this.setState({ results: res.data.response.docs, error: "" });
         }).catch(err => this.setState({ error: err.message }))
     };
@@ -59,12 +67,22 @@ class Home extends Component {
     handleArticleSave = event => {
         event.preventDefault();
         // console.log(event.target.id);
-        const clickedArticle = this.state.results.filter(element => element.id = event.target.id)[0];
-        // console.log(clickedArticle.headline);
+        const clickedArticle = this.state.results.filter(element => element.id = event.target.id)[0]; //SAve the article from the results array with the ID matching the button clicked
 
-        // this.setState({ lastSaved: clickedArticle})
         API.saveArticle(clickedArticle).then(res => {
-            console.log("Home response:", res)
+            // console.log("Home response:", res);
+            this.getSaved()
+        })
+    };
+
+
+    handleArticleDelete = (event) => {
+        event.preventDefault();
+        console.log("delete Saved method, button_id:", event.target.id);
+        const clickedArticle = this.state.savedArticles.filter(element => element._id = event.target.id)[0]; //SAve the article from the savedArticle array with the ID matching the button clicked
+        API.deleteArticle(clickedArticle).then(response => {
+            console.log("response to delete Saved Article: ", response);
+            this.getSaved();
         })
     };
 
@@ -81,28 +99,37 @@ class Home extends Component {
                             handleInputChange={this.handleInputChange}
                             handleFormSubmit={this.handleFormSubmit}
                         />
-
                     </Panel>
                     <Panel heading="Results">
                         {this.state.results.length ? (
                             <List>
-                                {this.state.results.map(result => (
+                                {this.state.results.map(result => ( //For each article in the result array, create a list item with a div w/ article info, and a save button with article ID
                                     <ListItem key={result._id}>
-                                        <ListDiv headline ={result.headline.main} byline={result.byline.original} pub_date = {result.pub_date} snippet = {result.snippet} url = {result.web_url} />
-                                       
-                                        <Button id={result._id} handleArticleSave={this.handleArticleSave}>
+                                        <ListDiv headline={result.headline.main} byline={result.byline.original} pub_date={result.pub_date} snippet={result.snippet} url={result.web_url} />
+                                        <Button id={result._id} onClick={this.handleArticleSave}>
                                             Save Article
                                         </ Button>
                                     </ListItem>
-                            ))}
+                                ))}
                             </List>
                         ) : (<h2> Search for an Article Above and View Results Here</h2>)
                         }
 
-
-
                     </Panel>
-                    <Panel heading="Saved Articles"> <form></form> </Panel>
+                    <Panel heading="Saved Articles">
+                        {this.state.savedArticles.length ? (
+                            <List>
+                                {this.state.savedArticles.map(article => ( //For each article in the savedResult array, create a list item with a div w/ article info, and a delete button with article ID
+                                    <ListItem key={article._id}>
+                                        <ListDiv headline={article.headline} byline={article.author} pub_date={article.publishDate} snippet={article.snippet} url={article.url} />
+                                        <Button id={article._id} onClick={this.handleArticleDelete}>
+                                            Delete Article
+                                    </ Button>
+                                    </ListItem>
+                                ))}
+                            </List>
+                        ) : ("No Articles Currently Saved...")}
+                    </Panel>
                 </Container>
             </div>
         )
