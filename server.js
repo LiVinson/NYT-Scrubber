@@ -1,8 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+
 const PORT = process.env.PORT || 3001;
-const models = require("./models");
 const logger = require("morgan"); //logs HTTP methods
 
 // const passport = require("passport");
@@ -26,13 +26,14 @@ app.use(logger("dev"));
 const routes = require("./routes")
 app.use(routes);
 
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/nytreact"
 
 // Set up promises with mongoose
 mongoose.Promise = global.Promise;
 // Connect to the Mongo DB
 //add mongo heroku uri
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/nytreact"
+  MONGODB_URI
 );
 
 // Start the API server
