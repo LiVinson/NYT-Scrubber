@@ -26,4 +26,15 @@ const Article = new Schema({
     }
 });
 
+Article.methods.addColon = () => {
+    //Takes in this.author
+
+    //Inserts ":" after "By"
+
+   //Updates this.author to new value.
+
+};
+
+
+
 module.exports = mongoose.model("Article", Article);

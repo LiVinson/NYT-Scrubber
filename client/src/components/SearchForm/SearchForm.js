@@ -34,9 +34,9 @@ const SearchForm = props => {
       />
     </div>
 
-    <button type="submit" onClick={props.handleFormSubmit} className="btn btn-success">
-      Search
-      </button>
+    <button type="submit" onClick={props.handleFormSubmit} className="btn submitBtn">
+      Find Articles
+    </button>
 
 
   </form>

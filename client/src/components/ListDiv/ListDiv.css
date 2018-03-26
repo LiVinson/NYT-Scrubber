@@ -1,4 +1,5 @@
 .listDiv {
-    border: solid blue 1px;
+    border: solid #003152 3px;
+    border-radius: 25px;
     width: 80%;
 }
