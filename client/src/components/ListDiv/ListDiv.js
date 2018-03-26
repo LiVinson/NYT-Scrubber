@@ -1,12 +1,15 @@
 import React from "react";
 import "./ListDiv.css";
 
-const ListDiv = (props) => (
+const ListDiv = (props) =>
+
+  (
+
     <div className = "listDiv">
-        <h4>{props.headline}</h4>
-        <p>{props.byline}</p>
-        <p>{props.snippet}</p>
-        <p><b>"Read the full Article: "</b>{props.url}</p>
+        <h4 className="article-header">{props.headline}</h4>
+        <p className="article-byline">{props.byline}</p>
+        <p className="article-snippet">{props.snippet}</p>
+        <p className="article-url"><a href={props.url} target="_blank"><b>"View the full Article: "</b></a></p>
     </div>
 
 );

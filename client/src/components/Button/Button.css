@@ -1,3 +1,22 @@
 .saveBtn {
     height: 30%;
+    background-color: lightgray;
+    border: solid 2px #003152;
+    color:#003152;
+    padding-left:20px;
+    padding-right:20px;
+    
+}
+.saveBtn:hover{
+    background-color:darkgray;
+
+}
+
+.saveBtn:active{
+    background-color: #003152;
+    color:lightgray;
+}
+
+.deleteBtn {
+    background-color: lightgray;
 }

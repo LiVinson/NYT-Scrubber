@@ -3,7 +3,7 @@ import "./Button.css";
 
 const Button = props => {
     return (
-    <button type="button" className=" saveBtn btn btn-info" {...props}>
+    <button type="button" {...props}>
         {props.children}
     </button>
 )};

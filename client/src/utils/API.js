@@ -10,9 +10,6 @@ export default {
     saveArticle: (data) => {
         // console.log("title inside API Save Article", article.headline);
         // console.log("btnId");
-
-
-
         // console.log("Inside saveArticle function:", data);
         const articleData = {
             headline: data.headline.main,
@@ -20,8 +17,8 @@ export default {
             pub_date: data.pub_date,
             snippet: data.snippet,
             url: data.web_url
-        }
-        // console.log(articleData.snippet);
+        };
+        console.log(articleData.headline);
 // console.log("publishing date:", articleData.pub_date);
 // console.log(typeof articleData.pub_date);
         return (axios.post("/api/article", articleData));
