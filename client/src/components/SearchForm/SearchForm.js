@@ -12,7 +12,7 @@ const SearchForm = props => {
         onChange={props.handleInputChange}
         value={props.search}
         className="form-control"
-        placeholder="Examples: Florida, ..."
+        placeholder="Popuar Searches: Florida, election, Facebook..."
       />
       <label>Start Year</label>
       <input
@@ -21,7 +21,8 @@ const SearchForm = props => {
         onChange={props.handleInputChange}
         value={props.startYear}
         className="form-control"
-        placeholder="2016"
+        placeholder="2017"
+        
       />
       <label>End Year</label>
       <input
