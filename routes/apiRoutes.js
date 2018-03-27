@@ -1,12 +1,13 @@
 
 	const path = require("path");
 	const router = require('express').Router();
-	const articleController = require("../controllers/articleController")
+	const articleController = require("../controllers/articleController");
 	//require controller and save in variable to access methods
 
 
 
 	//Get Route - > function to get all articles from the Articles collection (happens on page load, adding or deleting article)
+	router.get("/NYTarticles", articleController.queryNYT);
 
 	router.get("/articles", articleController.findAll);
 

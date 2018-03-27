@@ -1,15 +1,18 @@
 import React from "react";
 import "./Footer.css";
 
-const Footer = ( {children} ) => {
+const Footer = (props) => {
 return (
-<nav className="navbar navbar-default .navbar-static-bottom">
-  <div className="container">
-    { children }
-  </div>
-</nav>
+<footer class="page-footer">
+
+<div class="footer-copyright py-3 text-center">
+{ props.children }
+</div>
+
+</footer>
 )
 
 }
+
 
 export default Footer;

@@ -6,6 +6,8 @@ import SearchForm from "../../components/SearchForm";
 import List from "../../components/List";
 import ListItem from "../../components/ListItem";
 import ListDiv from "../../components/ListDiv";
+import ButtonGroup from "../../components/ButtonGroup";
+import Footer from "../../components/Footer";
 import Button from "../../components/Button";
 import API from "../../utils/API";
 import MessageDiv from "../../components/MessageDiv";
@@ -15,8 +17,8 @@ class Home extends Component {
 
     //state resides in parent component, and will be passed down to children components as needed
     state = {
-        topic: "",
-        startYear: 2017,
+        topic: "Florida", //default values used if nothing is entered
+        startYear: 2018,
         endYear: 2018,
         results: [],
         error: "",
@@ -42,7 +44,7 @@ class Home extends Component {
 
     //Called when user updates any of 3 form inputs
     handleInputChange = event => {
-        console.log(event.target.value);
+        // console.log(event.target.value);
         const { name, value } = event.target;
         this.setState({
             [name]: value
@@ -55,32 +57,34 @@ class Home extends Component {
         event.preventDefault();
         //Call method on API that will pass in state as parameter to be used to interact with NYT API
         document.querySelector("form").reset();
-        this.resultsTop.scrollIntoView({ behavior: "smooth", block: "start"});
+
 
         API.getArticles(this.state).then(res => {
             if (res.data.status === "error") {
                 throw new Error(res.data.message);
             };
-            this.setState({ results: res.data.response.docs, error: "" });
+            this.resultsTop.scrollIntoView({ behavior: "smooth", block: "start"});
+
+            this.setState({ results: res.data.response.docs.slice(0,5), error: "" });
         }).catch(err => this.setState({ error: err.message }))
     };
 
-    // viewArticle = event => {
-    //     console.log("event.target.data-url", event.target.data-url);
-    //     console.log("event.data-url", event.data-url);
+    viewArticle = event => {
+        console.log(event.target.value);
+        window.open(      
+            event.target.value,
+            '_blank' // <- This is what makes it open in a new window.
+          );
+    };
 
-    //     window.open(
-         
-    //         event.target.url,
-    //         '_blank' // <- This is what makes it open in a new window.
-    //       );
-    // }
     //Called when user clicks Save button
     handleArticleSave = event => {
         event.preventDefault();
         const clickedArticle = this.state.results.filter(element => element.id = event.target.id)[0]; //Locate the article from the results array with the ID matching the button clicked
         API.saveArticle(clickedArticle).then(res => {
-            this.getSaved() //includes newly saved article added via POST
+            this.getSaved(); //includes newly saved article added via POST
+            this.savedTop.scrollIntoView({ behavior: "smooth", block: "center"});
+
         })
     };
 
@@ -109,40 +113,51 @@ class Home extends Component {
                             handleFormSubmit={this.handleFormSubmit}
                         />
                     </Panel>
+
+                    <Panel heading="Results">
                     <div style={{ float:"left", clear: "both" }}
                         ref={(el) => { this.resultsTop = el; }}>
                     </div>
-                    <Panel heading="Results">
                                    {this.state.results.length ? (
                             <List>
                                 {this.state.results.map(result => ( //For each article in the result array, create a list item with a div w/ article info, and a save button with article ID
                                     <ListItem key={result._id}>
                                         <ListDiv headline={result.headline.main} byline={result.byline.original} pub_date={result.pub_date} snippet={result.snippet} url={result.web_url} />
-                                        <Button id={result._id} className="btn saveBtn" onClick={this.handleArticleSave}>
-                                            Save Article
-                                        </ Button>
-
+                                        <ButtonGroup>
+                                            <Button id={result._id} className="btn saveBtn" onClick={this.handleArticleSave}>
+                                                Save Article
+                                            </ Button>
+                                            <Button className="btn viewArticle" value ={result.web_url} onClick={this.viewArticle}>
+                                            View Article
+                                                {/* <a className="articleLink" href={result.web_url} target="_blank">View Article</a> */}
+                                            </ Button>
+                                        </ ButtonGroup>
                                     </ListItem>
                                 ))}
                             </List>
-                        ) : <MessageDiv message="Search for an Article Above and View Results Here" />}
+                        ) : (<MessageDiv message="Search for an Article Above and View Results Here" />)}
                         
                     </Panel>
                     <Panel heading="Saved Articles">
+                    <div style={{ float:"left", clear: "both" }}
+                        ref={(el) => { this.savedTop = el; }}>
+                    </div>
                         {this.state.savedArticles.length ? (
                             <List>
                                 {this.state.savedArticles.map(article => ( //For each article in the savedResult array, create a list item with a div w/ article info, and a delete button with article ID
                                     <ListItem key={article._id}>
                                         <ListDiv listType="saved" headline={article.headline} byline={article.author} pub_date={article.publishDate} snippet={article.snippet} url={article.url} />
                                         <Button id={article._id} className="btn deleteBtn" onClick={this.handleArticleDelete}>
-                                            Delete Article
+                                            Delete Article X
                                     </ Button>
                                     </ListItem>
                                 ))}
                             </List>
                         ) : <MessageDiv message="Save an article from the search results above and view the list of saved articles here." />}
                     </Panel>
+                    <Footer> <a href="https://Lisa Vinson.com"> Lisa Vinson </a></Footer>
                 </Container>
+                
             </div>
         )
     }

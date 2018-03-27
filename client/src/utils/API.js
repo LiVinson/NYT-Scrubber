@@ -1,10 +1,22 @@
 import axios from "axios";
+ 
 
 export default {
-    getArticles: (data) => {
-        const { topic, startYear, endYear } = data;
-        console.log(topic, startYear, endYear);
-        return (axios.get("https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=b9f91d369ff59547cd47b931d8cbc56b:0:74623931&q=" + [topic] + "&begin_date=" + [startYear] + "0101" + "&end_date=" + [endYear] + "0101" + "&fq=document_type:(article)"));
+
+    getArticles: (userquery) => {    
+        const { topic, startYear, endYear } = userquery;
+        // console.log(topic, startYear, endYear);
+        // console.log(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${API_KEY}&q=${topic}&begin_date=${startYear}0101"&end_date=${endYear}1231&fq=document_type:(article)`)
+        // return (axios.get(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${API_KEY}&q=${topic}&begin_date=${startYear}0101"&end_date=${endYear}1231&fq=document_type:(article)`));
+    
+       return axios.get('api/NYTarticles', {
+            data: {
+              topic, 
+              startYear,
+              endYear 
+            }
+          })   
+    
     },
 
     saveArticle: (data) => {
@@ -16,15 +28,12 @@ export default {
             byline: data.byline.original,
             pub_date: data.pub_date,
             snippet: data.snippet,
-            url: data.web_url
+            url: data.web_url,
+            nyt_id: data._id
         };
-        console.log(articleData.headline);
-// console.log("publishing date:", articleData.pub_date);
-// console.log(typeof articleData.pub_date);
-        return (axios.post("/api/article", articleData));
-        //Add functionality - post request using axios to the routes, routes to controller file. Create a new instance of Article schema, save to mongo DB, return the saved object, pass back in a promise in Home, update state (last Saved),
-        //Update panel 3 to do a get request for articles saved in the db and display
+        console.log(articleData.nyt_id);
 
+        return (axios.post("/api/article", articleData));
     },
 
     getSavedArticles: () => {
