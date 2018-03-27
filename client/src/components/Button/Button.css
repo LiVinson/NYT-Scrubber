@@ -9,7 +9,9 @@
     background-color: lightgray;
     border: solid 2px #003152;
     color:#003152;
-    margin-bottom:5px;
+    margin-top:5px;
+
+   
    
 }
 .saveBtn:hover{
@@ -23,10 +25,10 @@
 }
 
 .viewArticle {
-    margin-top:5px;
     background-color: #003152;
     color:white;
     border: solid 2px lightgray; 
+    margin-bottom:5px;
 }
 
 
@@ -42,6 +44,7 @@
 
 .deleteBtn {
     background-color: center;
-    border: #003152;
+    border: #003152 solid 2px;
+    color: red;
     
 }

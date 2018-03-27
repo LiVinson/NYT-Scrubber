@@ -3,7 +3,7 @@ import "./Button.css";
 
 const Button = props => {
     return (
-    <button type="button" {...props} if >
+    <button type="button" {...props}>
         {props.children}
     </button>
 )};

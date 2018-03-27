@@ -12,7 +12,7 @@ const SearchForm = props => {
         onChange={props.handleInputChange}
         value={props.search}
         className="form-control"
-        placeholder="Popuar Searches: Florida, election, Facebook..."
+        placeholder="Popular Searches: Florida, election, Facebook..."
       />
       <label>Start Year</label>
       <input

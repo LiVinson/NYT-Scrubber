@@ -1,18 +1,8 @@
 .panel-default>.panel-heading{
     background-color: lightgray;
     color: #003152;
-    /* border-left: 2px solid white;
-    border-right: 2px solid white; */
-
-
-
-}
-
-.panel-body {
-    /* border: 2px solid #003152; */
 }
 
 .panel-default {
     border: 2px solid #003152;
-    
 }
