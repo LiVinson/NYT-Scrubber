@@ -3,9 +3,9 @@ import "./Footer.css";
 
 const Footer = (props) => {
 return (
-<footer class="page-footer">
+<footer className="page-footer">
 
-<div class="footer-copyright py-3 text-center">
+<div className="footer-copyright py-3 text-center">
 { props.children }
 </div>
 

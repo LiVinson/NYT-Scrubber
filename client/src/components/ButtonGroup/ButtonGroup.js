@@ -3,7 +3,7 @@ import "./ButtonGroup.css";
 
 const ButtonGroup = (props) => {
     return (
-        <div className="button-group-Div" role="group">
+        <div className="button-group-div" role="group">
             {props.children}
         </div>
     )

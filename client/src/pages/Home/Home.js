@@ -11,7 +11,6 @@ import Footer from "../../components/Footer";
 import Button from "../../components/Button";
 import API from "../../utils/API";
 import MessageDiv from "../../components/MessageDiv";
-// import Footer from "../../components/Footer";
 
 class Home extends Component {
 
@@ -22,20 +21,18 @@ class Home extends Component {
         endYear: 2018,
         results: [],
         error: "",
-        // lastSaved: "",
         savedArticles: []
     };
 
     //When page loads, makes a request to get any articles saved in database.
     componentDidMount() {
         this.getSaved();
-
     };
 
     getSaved = () => {
         console.log("getSaved method")
         API.getSavedArticles().then(response => {
-            console.log("response to getSavedArticles: ", response.data);
+            console.log("response to getSavedArticles: ", response);
             this.setState({
                 savedArticles: response.data
             });
@@ -44,7 +41,6 @@ class Home extends Component {
 
     //Called when user updates any of 3 form inputs
     handleInputChange = event => {
-        // console.log(event.target.value);
         const { name, value } = event.target;
         this.setState({
             [name]: value
@@ -55,35 +51,36 @@ class Home extends Component {
     //Called when user clicks submit button in form
     handleFormSubmit = event => {
         event.preventDefault();
-        //Call method on API that will pass in state as parameter to be used to interact with NYT API
         document.querySelector("form").reset();
-
+         //Call method on API that will pass in state as parameter to be used to interact with NYT API
 
         API.getArticles(this.state).then(res => {
             if (res.data.status === "error") {
                 throw new Error(res.data.message);
             };
-            this.resultsTop.scrollIntoView({ behavior: "smooth", block: "start"});
+            this.resultsTop.scrollIntoView({ behavior: "smooth", block: "start"}); //Scolls down to the resultsTop reference inthe results panel
 
-            this.setState({ results: res.data.response.docs.slice(0,5), error: "" });
+            this.setState({ results: res.data.response.docs.slice(0,5), error: "" }); //Saves first 5 search results into state as an array of objects
         }).catch(err => this.setState({ error: err.message }))
     };
 
+    //Opens article in new window
     viewArticle = event => {
         console.log(event.target.value);
         window.open(      
             event.target.value,
-            '_blank' // <- This is what makes it open in a new window.
+            '_blank' //
           );
     };
 
     //Called when user clicks Save button
     handleArticleSave = event => {
         event.preventDefault();
-        const clickedArticle = this.state.results.filter(element => element.id = event.target.id)[0]; //Locate the article from the results array with the ID matching the button clicked
+        const clickedArticle = (this.state.results.filter(element => element._id === event.target.id)[0]);//Locates the article from the results array with the ID matching the button clicked
+
         API.saveArticle(clickedArticle).then(res => {
-            this.getSaved(); //includes newly saved article added via POST
-            this.savedTop.scrollIntoView({ behavior: "smooth", block: "center"});
+            this.getSaved(); 
+            this.savedTop.scrollIntoView({ behavior: "smooth", block: "center"}); //Scolls down to the savedTop reference in the Saved panel
 
         })
     };
@@ -91,10 +88,8 @@ class Home extends Component {
     //Called when user clicks Delete button
     handleArticleDelete = (event) => {
         event.preventDefault();
-        console.log("delete Saved method, button_id:", event.target.id);
-        const clickedArticle = this.state.savedArticles.filter(element => element._id = event.target.id)[0]; //Locate the article from the savedArticle array with the ID matching the button clicked
+        const clickedArticle = this.state.savedArticles.filter(element => element._id = event.target.id)[0]; //Locates the article from the savedArticle array with the ID matching the button clicked
         API.deleteArticle(clickedArticle).then(response => {
-            console.log("response to delete Saved Article: ", response);
             this.getSaved(); 
         })
     };
@@ -124,13 +119,13 @@ class Home extends Component {
                                     <ListItem key={result._id}>
                                         <ListDiv headline={result.headline.main} byline={result.byline.original} pub_date={result.pub_date} snippet={result.snippet} url={result.web_url} />
                                         <ButtonGroup>
+                                        <Button className="btn viewArticle" value ={result.web_url} onClick={this.viewArticle}>
+                                            View Article
+                                            </ Button>
                                             <Button id={result._id} className="btn saveBtn" onClick={this.handleArticleSave}>
                                                 Save Article
                                             </ Button>
-                                            <Button className="btn viewArticle" value ={result.web_url} onClick={this.viewArticle}>
-                                            View Article
-                                                {/* <a className="articleLink" href={result.web_url} target="_blank">View Article</a> */}
-                                            </ Button>
+
                                         </ ButtonGroup>
                                     </ListItem>
                                 ))}
@@ -144,18 +139,24 @@ class Home extends Component {
                     </div>
                         {this.state.savedArticles.length ? (
                             <List>
-                                {this.state.savedArticles.map(article => ( //For each article in the savedResult array, create a list item with a div w/ article info, and a delete button with article ID
+                                {this.state.savedArticles.slice(0).reverse().map(article => ( //For each article in the savedArticles array, create a list item (reverse order) with a div w/ article info, and a delete button with article ID
                                     <ListItem key={article._id}>
-                                        <ListDiv listType="saved" headline={article.headline} byline={article.author} pub_date={article.publishDate} snippet={article.snippet} url={article.url} />
+                                       <ListDiv headline={article.headline} byline={article.byline} pub_date={article.pub_date} snippet={article.snippet} url={article.url} />
+                                        <ButtonGroup>
+                                        <Button className="btn viewArticle" value ={article.web_url} onClick={this.viewArticle}>
+                                            View Article
+                                            </ Button>
                                         <Button id={article._id} className="btn deleteBtn" onClick={this.handleArticleDelete}>
-                                            Delete Article X
-                                    </ Button>
+                                                Delete Article
+                                        </ Button>
+                                        </ ButtonGroup>
+
                                     </ListItem>
                                 ))}
                             </List>
                         ) : <MessageDiv message="Save an article from the search results above and view the list of saved articles here." />}
                     </Panel>
-                    <Footer> <a href="https://Lisa Vinson.com"> Lisa Vinson </a></Footer>
+                    <Footer> <a href="https://Lisa Vinson.com">Lisa Vinson.com </a></Footer>
                 </Container>
                 
             </div>
