@@ -110,28 +110,28 @@ class Home extends Component {
                     </Panel>
 
                     <Panel heading="Results">
-                    <div style={{ float:"left", clear: "both" }}
-                        ref={(el) => { this.resultsTop = el; }}>
-                    </div>
-                                   {this.state.results.length ? (
-                            <List>
-                                {this.state.results.map(result => ( //For each article in the result array, create a list item with a div w/ article info, and a save button with article ID
-                                    <ListItem key={result._id}>
-                                        <ListDiv headline={result.headline.main} byline={result.byline.original} pub_date={result.pub_date} snippet={result.snippet} url={result.web_url} />
-                                        <ButtonGroup>
-                                        <Button className="btn viewArticle" value ={result.web_url} onClick={this.viewArticle}>
-                                            View Article
-                                            </ Button>
-                                            <Button id={result._id} className="btn saveBtn" onClick={this.handleArticleSave}>
-                                                Save Article
-                                            </ Button>
+                        <div style={{ float:"left", clear: "both" }}
+                            ref={(el) => { this.resultsTop = el; }}>
+                        </div>
+                            {this.state.results.length ? (
+                                <List>
+                                    {this.state.results.map(result => ( //For each article in the result array, create a list item with a div w/ article info, and a save button with article ID
+                                        <ListItem key={result._id}>
+                                            <ListDiv headline={result.headline.main} byline={result.byline.original} pub_date={result.pub_date} snippet={result.snippet} url={result.web_url} />
+                                            <ButtonGroup>
+                                                <Button className="btn viewArticle" value ={result.web_url} onClick={this.viewArticle}>
+                                                    View Article
+                                                </Button>
+                                                <Button id={result._id} className="btn saveBtn" onClick={this.handleArticleSave}>
+                                                    Save Article
+                                                </Button>
 
-                                        </ ButtonGroup>
-                                    </ListItem>
-                                ))}
-                            </List>
-                        ) : (<MessageDiv message="Search for an Article Above and View Results Here" />)}
-                        
+                                            </ButtonGroup>
+                                        </ListItem>
+                                    ))}
+                                </List>
+                            ) : (<MessageDiv message="Search for an Article Above and View Results Here" />)}
+                            
                     </Panel>
                     <Panel heading="Saved Articles">
                     <div style={{ float:"left", clear: "both" }}
@@ -143,20 +143,20 @@ class Home extends Component {
                                     <ListItem key={article._id}>
                                        <ListDiv headline={article.headline} byline={article.byline} pub_date={article.pub_date} snippet={article.snippet} url={article.url} />
                                         <ButtonGroup>
-                                        <Button className="btn viewArticle" value ={article.web_url} onClick={this.viewArticle}>
-                                            View Article
-                                            </ Button>
-                                        <Button id={article._id} className="btn deleteBtn" onClick={this.handleArticleDelete}>
+                                            <Button className="btn viewArticle" value ={article.web_url} onClick={this.viewArticle}>
+                                                View Article
+                                            </Button>
+                                            <Button id={article._id} className="btn deleteBtn" onClick={this.handleArticleDelete}>
                                                 Delete Article
-                                        </ Button>
-                                        </ ButtonGroup>
+                                            </Button>
+                                        </ButtonGroup>
 
                                     </ListItem>
                                 ))}
                             </List>
                         ) : <MessageDiv message="Save an article from the search results above and view the list of saved articles here." />}
                     </Panel>
-                    <Footer> <a href="https://Lisa Vinson.com">Lisa Vinson.com </a></Footer>
+                    <Footer> <a href="https://livinson.github.io/LisaVinson/" target="_blank" rel="noopener noreferrer">www.LisaVinson.com </a></Footer>
                 </Container>
                 
             </div>

@@ -13,7 +13,6 @@ export default {
     //Called from Home.js when user click save article
     saveArticle: (data) => {
 
-        console.log("saving", data.headline.main);
         const articleData = {
             headline: data.headline.main,
             byline: data.byline.original,
@@ -27,14 +26,12 @@ export default {
 
     //Called from Home.js when user click save artice
     getSavedArticles: () => {
-        console.log("Inside API.getSavedArticles");
         return (axios.get("/api/articles"));
 
     },
     
     //Called from Home.js when user click delete article
     deleteArticle: (data) => {
-        console.log(data);
         return (axios.delete(`api/article/${data._id}`));
     },
 }

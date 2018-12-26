@@ -8,4 +8,4 @@ const MessageDiv = props => {
     )
 };
 
-export default MessageDiv 
+export default MessageDiv;
