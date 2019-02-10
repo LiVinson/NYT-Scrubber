@@ -3,9 +3,9 @@
 	const router = require('express').Router();
 
 
-	// router.use("/auth",require("./authRoutes.js")(passport));
-	router.use("/api",require("./apiRoutes.js"));
-	//add more routes here
+//require and use api routes
+	router.use("/api", require("./apiRoutes.js"));
+
 	
 
 	// If no API routes are hit, send the React app
