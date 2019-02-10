@@ -32,9 +32,9 @@ This application is deployed using [Heroku](http://www.heroku.com) and mLab.
 
 1. Clone the repository
 2. Request an API key from the New York Times
-3. Create a .env file and add the following: REACT_APP_NYT_KEY=your_key_from_NYT
-4. Run yarn install to install the npm packages
-5. Run 'yarn start' to get the development server running!
+3. Create a .env file and add the following: ```REACT_APP_NYT_KEY=your_key_from_NYT```
+4. Run ```yarn install``` to install the npm packages
+5. Run ```yarn start``` to get the development server running
 
 ## Future Developments
 
