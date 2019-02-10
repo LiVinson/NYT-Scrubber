@@ -26,8 +26,7 @@ This application is deployed using [Heroku](http://www.heroku.com) and mLab.
 
 ## Demo
 
-Search for an article by key work and an optional year range:
-[](NYTScrubber.gif)
+Coming Soon!
 
 ## Get It Working Locally
 
