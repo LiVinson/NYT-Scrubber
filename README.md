@@ -25,7 +25,7 @@ This application is deployed using [Heroku](http://www.heroku.com) and mLab.
 - [Axios](https://www.npmjs.com/package/axios) - Promised based HTTP client for the browser and node
 
 ## Demo
-Search for an article by key work and an optional year range:
+
 ![](NYTScrubber.gif)
 
 ## Get It Working Locally
