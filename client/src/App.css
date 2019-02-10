@@ -1,12 +1,13 @@
 body {
-    background-color: #003152;
+  background-color: #003152;
+  padding: 20px;
 }
 
 * {
-    font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
-h1, h2 {
-    font-family: 'Lobster', cursive !important;
-
+h1,
+h2 {
+  font-family: "Lobster", cursive !important;
 }

@@ -1,21 +1,24 @@
 .submitBtn {
-    padding-left:30px;
-    padding-right:30px;	
-    color:#ffffff;
-    font-size:16px;
-    background-color: #003152;
-
+  padding-left: 30px;
+  padding-right: 30px;
+  color: #ffffff;
+  font-size: 16px;
+  background-color: #003152;
 }
+
+.submitBtn:focus {
+  background-color: #003152;
+  color: #ffffff;
+  border: solid 2px #ffffff;
+} 
 
 .submitBtn:hover {
-background-color:#04558b;
-color:white;
+  background-color: #04558b;
+  color: #ffffff;
 }
- 
+
 .submitBtn:active {
-    background-color:#009ACD;
-    color:white;
-    border: solid 2px #003152;
-
+  background-color: #009acd;
+  color: #ffffff;
+  border: solid 2px #003152;
 }
-

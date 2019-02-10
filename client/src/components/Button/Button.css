@@ -37,6 +37,12 @@
     text-decoration: none;
 }
 
+.viewArticle:focus {
+    background-color: #003152;
+    color: #ffffff;
+    border: solid 2px #ffffff;
+  } 
+  
 .viewArticle:hover{
     background-color: #009ACD;
 
