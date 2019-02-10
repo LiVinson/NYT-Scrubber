@@ -16,8 +16,8 @@ class Home extends Component {
   //state resides in parent component, and will be passed down to children components as needed
   state = {
     topic: "Florida", //default values used if nothing is entered
-    startYear: (new Date()).getFullYear(),
-    endYear: (new Date()).getFullYear(),
+    startYear: new Date().getFullYear(),
+    endYear: new Date().getFullYear(),
     results: [],
     error: "",
     savedArticles: []
@@ -67,6 +67,7 @@ class Home extends Component {
 
   //Opens article in new window
   viewArticle = event => {
+    console.log(event.target.value);
     window.open(
       event.target.value,
       "_blank" //
@@ -81,8 +82,8 @@ class Home extends Component {
     )[0]; //Locates the article from the results array with the ID matching the button clicked
 
     API.saveArticle(clickedArticle).then(res => {
+      this.savedTop.scrollIntoView({ behavior: "smooth", block: "start" }); //Scolls down to the savedTop reference in the Saved panel
       this.getSaved();
-      this.savedTop.scrollIntoView({ behavior: "smooth", block: "center" }); //Scolls down to the savedTop reference in the Saved panel
     });
   };
 
@@ -112,15 +113,15 @@ class Home extends Component {
             handleInputChange={this.handleInputChange}
             handleFormSubmit={this.handleFormSubmit}
           />
-        </Panel>
-
-        <Panel heading="Results">
           <div
             style={{ float: "left", clear: "both" }}
             ref={el => {
               this.resultsTop = el;
             }}
           />
+        </Panel>
+
+        <Panel heading="Results">
           {this.state.results.length ? (
             <List>
               {this.state.results.map((
@@ -156,14 +157,14 @@ class Home extends Component {
           ) : (
             <MessageDiv message="Search for an Article Above and View Results Here" />
           )}
-        </Panel>
-        <Panel heading="Saved Articles">
           <div
             style={{ float: "left", clear: "both" }}
             ref={el => {
               this.savedTop = el;
             }}
           />
+        </Panel>
+        <Panel heading="Saved Articles">
           {this.state.savedArticles.length ? (
             <List>
               {this.state.savedArticles
@@ -183,7 +184,7 @@ class Home extends Component {
                     <ButtonGroup>
                       <Button
                         className="btn viewArticle"
-                        value={article.web_url}
+                        value={article.url}
                         onClick={this.viewArticle}
                       >
                         View Article
