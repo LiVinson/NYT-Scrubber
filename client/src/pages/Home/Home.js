@@ -16,8 +16,8 @@ class Home extends Component {
   //state resides in parent component, and will be passed down to children components as needed
   state = {
     topic: "Florida", //default values used if nothing is entered
-    startYear: 2018,
-    endYear: 2018,
+    startYear: (new Date()).getFullYear(),
+    endYear: (new Date()).getFullYear(),
     results: [],
     error: "",
     savedArticles: []
